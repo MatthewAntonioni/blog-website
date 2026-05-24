@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'blogwebsite'
           slot-name: 'Production'
-          package: '**/springbootserver/demo/build/libs/*SNAPSHOT.jar'
+           package: 'demo-0.0.1-SNAPSHOT.jar'
           
