@@ -24,14 +24,14 @@ jobs:
           java-version: '25'
           distribution: 'microsoft'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build with Gradle
+        run: cd springbootserver/demo && ./gradlew build -x test
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: springbootserver/demo/build/libs/demo-0.0.1-SNAPSHOT.jar
 
   deploy:
     runs-on: ubuntu-latest
