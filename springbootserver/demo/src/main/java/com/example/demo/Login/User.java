@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 
 public class User {
 
+    //this gives access to the data in the database
+
 @Id
 @Column(name = "userId")
 private int userID;
