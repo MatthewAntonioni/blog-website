@@ -3,22 +3,18 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const password = document.getElementById('password').value;
 
     try {
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password, admin })
+            body: JSON.stringify({ username, password })
         });
+
+        //add email and password constraints here
 
         if (response.ok) {
             window.location.href = '/front-page.html';
-        } else if(admin == true){
-
-            window.locatiuon.href = '/adminTools/adminDash.html';
-
-        }else {
-            document.getElementById('error').textContent = 'Invalid username or password';
         }
     } catch (error) {
         document.getElementById('error').textContent = 'An error occurred. Please try again later.';
