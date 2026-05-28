@@ -37,4 +37,12 @@ public String getPassword() {
 public boolean isAdmin() {
     return admin;
 }
+
+public void setUsername(String username) {
+    this.username = username;
+}
+
+public void setPassword(String password) {
+    this.password = password;
+}
 }
