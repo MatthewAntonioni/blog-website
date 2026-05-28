@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/register")
 //this never changes its just handling http requests and gets the file path
 
 public class regController {
@@ -24,6 +24,15 @@ public ResponseEntity<?> register(@RequestBody registerRequest request){
 
 User user = userRepository.findByUsername(request.getUsername());
 
+if(user == null){
+    user = new User();
+    user.setUsername(request.getUsername());
+    user.setPassword(request.getPassword());
+    userRepository.save(user);
+    return ResponseEntity.ok("Registration successful");
+
+    //add generated UUID and add password hasing
+}
 return ResponseEntity.status(400).body("Username already exists");
 
 }
