@@ -45,4 +45,8 @@ public void setUsername(String username) {
 public void setPassword(String password) {
     this.password = password;
 }
+
+public void setAdmin(boolean admin) {
+    this.admin = admin;
+}
 }

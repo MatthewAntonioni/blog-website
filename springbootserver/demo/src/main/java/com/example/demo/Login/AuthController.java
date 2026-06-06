@@ -12,11 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 
 public class AuthController {
+//field declartion for database access needs to be before constructor for unit testing to work because we need to access it before we start using it in the constutor 
+    private UserRepo userRepository;
+
+    //this contrusutor is so we can run unit tests and we need access to database stuff
+@Autowired   
+public AuthController(UserRepo userRepository) {
+this.userRepository = userRepository;
+
+    }
 
     //this is where the stuff we get fromt he database is used in various ways
-    
-@Autowired
-private UserRepo userRepository;
+
 
 @PostMapping("/login")
 public ResponseEntity<?> login(@RequestBody loginRequest request){
@@ -33,4 +40,11 @@ if(user == null || !user.getPassword().equals(request.getPassword())){
 return ResponseEntity.ok("Login successful");
 
 }
+
+public boolean authenticate(String username, String password) {
+    User user = userRepository.findByUsername(username);
+    return user != null && user.getPassword().equals(password);
+
+}
+
 }
