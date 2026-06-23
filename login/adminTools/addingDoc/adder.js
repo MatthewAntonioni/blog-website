@@ -1,6 +1,6 @@
 let editor
 
-ClassicEditor.ClassicEditor.create(document.querySelector('#editor')) 
+ClassicEditor.create(document.querySelector('#editor'))
 
 .then(newEditor => {editor = e; })
 .catch(error => console.error(error));
