@@ -10,6 +10,13 @@ document.getElementById('submit').addEventListener('click', async function() {
     const title = document.getElementById('title').value;
     const content = editor.getData();
 
+    //this strips the html tags from the content so that it can later be sorter for the preview
+    const plainText = content.replace(/<[^>]*>/g, '');
+
+    //this will split the text into 3 different sentences
+    const sentences = plainText.match(/[^.!?]+[.!?]+/g);
+    const preview = sentences ? sentences.slice(0, 3).join(' ') : plainText.substring(0, 100);
+
     try{
 
         const response = await fetch('/api/posts/create', {
@@ -17,7 +24,7 @@ document.getElementById('submit').addEventListener('click', async function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title, content })
+            body: JSON.stringify({ title, content, preview })
         });
         //add seperate functionality for drafts
         if (response.ok) {
