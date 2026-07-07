@@ -5,7 +5,7 @@ ClassicEditor.create(document.querySelector('#editor'))
 .then(newEditor => {editor = e; })
 .catch(error => console.error(error));
 
-document.getElementById('submit').addEventListener('click', async function() {
+document.getElementById('pub').addEventListener('click', async function() {
 
     const title = document.getElementById('title').value;
     const content = editor.getData();
@@ -24,13 +24,38 @@ document.getElementById('submit').addEventListener('click', async function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title, content, preview })
+            body: JSON.stringify({ title, content, preview, published: true }) // Set published to true for published posts
         });
         //add seperate functionality for drafts
         if (response.ok) {
             document.getElementById('success').textContent = 'post published';
         } else {
             document.getElementById('error').textContent = 'Failed to publish post';
+        }
+    }
+    catch (error) {
+        document.getElementById('error').textContent = 'An error occurred. Please try again later.';
+    }
+});
+
+document.getElementById('draft').addEventListener('click', async function() {
+
+    const title = document.getElementById('title').value;
+    const content = editor.getData();
+
+    try{
+
+        const response = await fetch('/api/posts/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ title, content, published: false }) // Set published to false for drafts
+        });
+        if (response.ok) {
+            document.getElementById('success').textContent = 'post saved as draft';
+        } else {
+            document.getElementById('error').textContent = 'Failed to save post as draft';
         }
     }
     catch (error) {
