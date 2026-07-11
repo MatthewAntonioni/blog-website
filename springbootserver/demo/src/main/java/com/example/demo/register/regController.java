@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 //this never changes its just handling http requests and gets the file path
 
 public class regController {
@@ -19,7 +19,7 @@ private UserRepo userRepository;
 
 //autowired works as a manager of sorts it stops mutiple instances of the same object from getting out of control or interacting with each other
 
-@PostMapping("/register")
+@PostMapping("/auth/register")
 public ResponseEntity<?> register(@RequestBody registerRequest request){
 
 User user = userRepository.findByUsername(request.getUsername());
