@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/auth")
 //this never changes its just handling http requests and gets the file path
 
 public class regController {
