@@ -11,13 +11,36 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             body: JSON.stringify({ username, password })
         });
 
-        //add email and password constraints here
+        
 
         if (response.ok) {
             window.location.href = '/front-page.html';
         }
+        
     } catch (error) {
         document.getElementById('error').textContent = 'An error occurred. Please try again later.';
     }
 
 });
+
+    try {    
+
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, admin })
+      });
+        
+        if (response.ok) {
+            window.location.href = '/adminDash.html';
+        }
+
+     } catch (error) {
+            document.getElementById('error').textContent = 'An error occurred. Please try again later.';
+        }
+
+    
+
+
