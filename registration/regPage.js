@@ -3,7 +3,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const password = document.getElementById('password').value;
     const name = document.getElementById('name').value;
     try {
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch('https://blogwebsite-linix-eufjb3gjgpdkdfba.canadacentral-01.azurewebsites.net/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
