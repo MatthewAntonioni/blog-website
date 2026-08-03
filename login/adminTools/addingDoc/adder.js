@@ -2,8 +2,20 @@ let editor
 
 ClassicEditor.create(document.querySelector('#editor'))
 
-.then(newEditor => {editor = e; })
+.then(newEditor => {editor = e; 
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const draftId = urlParams.get('draftId');
+
+    if (draftId) {
+
+    loadDraftIntoEditor(draftId);
+    }
+})
 .catch(error => console.error(error));
+
+
 
 document.getElementById('pub').addEventListener('click', async function() {
 
