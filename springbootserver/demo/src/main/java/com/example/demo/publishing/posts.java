@@ -25,7 +25,7 @@ private String preview;
 
 @Column(name = "publish")
 
-private boolean publish;
+private int publish;
 
 
 // add sets to title preivew and content (when) i add unit tests
@@ -46,7 +46,7 @@ public String getPreview() {
     return preview;
 }
 
-public boolean isPublish() {
+public int isPublish() {
     return publish;
 }
 
@@ -71,7 +71,7 @@ public String setPreview(String preview) {
     return preview;
 }
 
-public boolean setPublish(boolean publish) {
+public int setPublish(int publish) {
     this.publish = publish;
     return publish;
 }
