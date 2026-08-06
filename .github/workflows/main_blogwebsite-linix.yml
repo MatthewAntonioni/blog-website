@@ -27,22 +27,17 @@ jobs:
       - name: Build with Gradle
         run: cd springbootserver/demo && ./gradlew build -x test
 
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
       - name: Deploy to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          source: "springbootserver/demo/build/libs/demo-0.0.1-SNAPSHOT.jar"
-          target: "/home/app/"
-          strip_components: 4
+        run: |
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no springbootserver/demo/build/libs/demo-0.0.1-SNAPSHOT.jar ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/app/
 
       - name: Restart Spring Boot
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            pkill -f 'demo-0.0.1-SNAPSHOT.jar' || true
-            nohup java -jar /home/app/demo-0.0.1-SNAPSHOT.jar --spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }} --spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }} --spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }} > /home/app/app.log 2>&1 &
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "pkill -f 'demo-0.0.1-SNAPSHOT.jar' || true && nohup java -jar /home/app/demo-0.0.1-SNAPSHOT.jar --spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }} --spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }} --spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }} > /home/app/app.log 2>&1 &"
