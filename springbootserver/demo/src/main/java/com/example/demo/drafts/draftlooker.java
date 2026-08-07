@@ -24,7 +24,7 @@ public draftlooker(postRepo pr) {
 
 @GetMapping("/drafts")
 public ResponseEntity<List<posts>> getDrafts() {
-    List<posts> drafts = pr.findByPublished(0); // Assuming 0 represents drafts
+    List<posts> drafts = pr.findByPublish(0); // Assuming 0 represents drafts
     return ResponseEntity.ok(drafts);
 }
 

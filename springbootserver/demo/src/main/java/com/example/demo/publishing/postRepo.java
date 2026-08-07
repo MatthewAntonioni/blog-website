@@ -7,7 +7,7 @@ public interface postRepo extends JpaRepository<posts, Integer> {
 
     //add when i want to add the name checker to the database
 
-    List<posts> findByPublished(int publish);
+    List<posts> findByPublish(int publish);
 
     
 }
