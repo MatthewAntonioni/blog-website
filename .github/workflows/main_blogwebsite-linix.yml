@@ -34,6 +34,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
+      -  name: Debug SSH key
+         run: |
+          head -1 ~/.ssh/id_rsa
+
       - name: Deploy to VPS
         run: |
           scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no springbootserver/demo/build/libs/demo-0.0.1-SNAPSHOT.jar ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/app/
