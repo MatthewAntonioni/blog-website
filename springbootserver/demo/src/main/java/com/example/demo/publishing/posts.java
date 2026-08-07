@@ -29,6 +29,7 @@ private int publish;
 
 
 // add sets to title preivew and content (when) i add unit tests
+//penis
 
 public int getPostID() {
     return postID;
