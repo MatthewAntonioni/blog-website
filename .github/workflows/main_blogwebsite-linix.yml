@@ -34,14 +34,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      -  name: Debug SSH key
-         run: |
-          head -1 ~/.ssh/id_rsa
-
       - name: Deploy to VPS
         run: |
           scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no springbootserver/demo/build/libs/demo-0.0.1-SNAPSHOT.jar ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/app/
 
       - name: Restart Spring Boot
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "pkill -f 'demo-0.0.1-SNAPSHOT.jar' || true && nohup java -jar /home/app/demo-0.0.1-SNAPSHOT.jar --spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }} --spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }} --spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }} > /home/app/app.log 2>&1 &"
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "pkill -f 'demo-0.0.1-SNAPSHOT.jar' || true && nohup java -jar /home/app/demo-0.0.1-SNAPSHOT.jar > /home/app/app.log 2>&1 &"
