@@ -3,7 +3,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const password = document.getElementById('password').value;
     const name = document.getElementById('name').value;
     try {
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch('http://52.228.84.33:8080/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
