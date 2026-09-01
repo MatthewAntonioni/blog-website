@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface postRepo extends JpaRepository<posts, Integer> {
 
-    //add when i want to add the name checker to the database
+    //unadded name checker as no real fault would occur if samne name exits
 
     List<posts> findByPublish(int publish);
 
